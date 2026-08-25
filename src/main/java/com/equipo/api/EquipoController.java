@@ -1,6 +1,7 @@
 package com.equipo.api;
 
 import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +18,10 @@ public class EquipoController {
 
     // ─────────────────────────────────────────────────────────────────
     // ZONA DE TRABAJO DEL EQUIPO
-    // Cada integrante del equipo agrega su método en esta sección.
-    // Rama: feature/tu-nombre
     // ─────────────────────────────────────────────────────────────────
+     @GetMapping("Daniela Gutierrez")
+    public String saludo() {
+        return "Hola, soy Daniela Gutierrez y este es mi endpoint.";
+    }
 
 }
