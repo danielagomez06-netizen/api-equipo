@@ -1,0 +1,38 @@
+﻿services:
+  mysql:
+    image: mysql:8.4
+    container_name: asignador-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: asignador_academico
+      MYSQL_USER: asignador
+      MYSQL_PASSWORD: ${DB_PASSWORD:-desarrollo_local}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_desarrollo_local}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  academico-service:
+    build:
+      context: ./academico-service
+      dockerfile: Dockerfile
+    container_name: academico-service
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/asignador_academico
+      SPRING_DATASOURCE_USERNAME: asignador
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-desarrollo_local}
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

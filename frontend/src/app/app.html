@@ -1,0 +1,514 @@
+
+@if (!autenticado()) {
+  <main class="login">
+    <section class="login-card">
+      <div class="login-logo">UCEVA</div>
+      <p class="login-institucion">Universidad Central del Valle</p>
+
+      <h1>Asignador de salas de cómputo</h1>
+      <p>
+        Ingresa con tu cuenta institucional para continuar.
+      </p>
+
+      <button type="button" (click)="iniciarSesion()">
+        Iniciar sesión
+      </button>
+    </section>
+  </main>
+} @else {
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-encabezado">
+        <div class="sidebar-logo">UCEVA</div>
+        <div>
+          <strong>Asignador</strong>
+          <span>Salas de cómputo</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        @if (esCoordinador() || esDocente()) {
+          <p class="menu-titulo">GENERAL</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'inicio'"
+            (click)="cambiarPantalla('inicio')"
+          >
+            <span>⌂</span>
+            Inicio
+          </button>
+        }
+
+        @if (esCoordinador()) {
+          <p class="menu-titulo">COORDINACIÓN</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'salas'"
+            (click)="cambiarPantalla('salas')"
+          >
+            <span>▦</span>
+            Salas y espacios
+          </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'revision'"
+            (click)="cambiarPantalla('revision')"
+          >
+            <span>✓</span>
+            Revisión del periodo
+          </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'asignacion'"
+            (click)="cambiarPantalla('asignacion')"
+          >
+            <span>▤</span>
+            Asignación
+          </button>
+        }
+
+        @if (esDocente()) {
+          <p class="menu-titulo">DOCENCIA</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'mis-cursos'"
+            (click)="cambiarPantalla('mis-cursos')"
+          >
+            <span>▧</span>
+            Mis cursos
+          </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'mi-horario'"
+            (click)="cambiarPantalla('mi-horario')"
+          >
+            <span>◷</span>
+            Mi horario
+          </button>
+        }
+
+        @if (!esCoordinador() && !esDocente()) {
+          <p class="mensaje-sin-rol">
+            Tu cuenta no tiene un rol autorizado.
+            Contacta al administrador.
+          </p>
+        }
+      </nav>
+
+      <div class="sidebar-pie">
+        <div class="usuario-info">
+          <div class="usuario-avatar">
+            {{ usuario().charAt(0).toUpperCase() || 'U' }}
+          </div>
+
+          <div class="usuario-datos">
+            <strong>{{ usuario() }}</strong>
+            <span>
+              @if (esCoordinador()) {
+                Coordinador
+              } @else if (esDocente()) {
+                Docente
+              } @else {
+                Sin rol asignado
+              }
+            </span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="boton-cerrar-sesion"
+          (click)="cerrarSesion()"
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    </aside>
+
+    <main class="contenido-principal">
+      <header class="encabezado-principal">
+        <div>
+          @if (pantalla() === 'inicio') {
+            <h1>Inicio</h1>
+            <p>Bienvenido al sistema de asignación de salas.</p>
+          } @else if (pantalla() === 'salas') {
+            <h1>Salas y espacios</h1>
+            <p>Consulta y administra los espacios disponibles.</p>
+          } @else if (pantalla() === 'revision') {
+            <h1>Revisión del periodo</h1>
+            <p>Revisa la información antes de generar la asignación.</p>
+          } @else if (pantalla() === 'asignacion') {
+            <h1>Asignación</h1>
+            <p>Consulta la distribución de cursos y salas.</p>
+          } @else if (pantalla() === 'mis-cursos') {
+            <h1>Mis cursos</h1>
+            <p>Consulta los cursos asociados a tu cuenta.</p>
+          } @else if (pantalla() === 'mi-horario') {
+            <h1>Mi horario</h1>
+            <p>Consulta tu horario de clases asignado.</p>
+          } @else if (pantalla() === 'explicacion') {
+            <h1>Explicación de la asignación</h1>
+            <p>Consulta los criterios utilizados en la distribución.</p>
+          }
+        </div>
+
+        <div class="encabezado-usuario">
+          <span class="indicador-sesion"></span>
+          Sesión activa
+        </div>
+      </header>
+
+      @if (pantalla() === 'inicio' && (esCoordinador() || esDocente())) {
+        <section class="bienvenida">
+          <h2>
+            Hola, {{ usuario() }}
+          </h2>
+          <p>
+            Selecciona una opción para comenzar a trabajar.
+          </p>
+        </section>
+
+        @if (esCoordinador()) {
+          <section class="panel-seccion">
+            <h2>Herramientas de coordinación</h2>
+
+            <div class="tarjetas-grid">
+              <button
+                type="button"
+                class="tarjeta"
+                (click)="cambiarPantalla('salas')"
+              >
+                <span class="tarjeta-icono">▦</span>
+                <h3>Salas y espacios</h3>
+                <p>Consulta y administra los espacios de cómputo.</p>
+                <span class="tarjeta-enlace">Administrar →</span>
+              </button>
+
+              <button
+                type="button"
+                class="tarjeta"
+                (click)="cambiarPantalla('revision')"
+              >
+                <span class="tarjeta-icono">✓</span>
+                <h3>Revisión del periodo</h3>
+                <p>Verifica los datos previos a la asignación.</p>
+                <span class="tarjeta-enlace">Revisar →</span>
+              </button>
+
+              <button
+                type="button"
+                class="tarjeta"
+                (click)="cambiarPantalla('asignacion')"
+              >
+                <span class="tarjeta-icono">▤</span>
+                <h3>Asignación</h3>
+                <p>Consulta la distribución de cursos y salas.</p>
+                <span class="tarjeta-enlace">Consultar →</span>
+              </button>
+            </div>
+          </section>
+        }
+
+        @if (esDocente()) {
+          <section class="panel-seccion">
+            <h2>Herramientas de docencia</h2>
+
+            <div class="tarjetas-grid">
+              <button
+                type="button"
+                class="tarjeta"
+                (click)="cambiarPantalla('mis-cursos')"
+              >
+                <span class="tarjeta-icono">▧</span>
+                <h3>Mis cursos</h3>
+                <p>Consulta tus cursos y sus datos principales.</p>
+                <span class="tarjeta-enlace">Ver cursos →</span>
+              </button>
+
+              <button
+                type="button"
+                class="tarjeta"
+                (click)="cambiarPantalla('mi-horario')"
+              >
+                <span class="tarjeta-icono">◷</span>
+                <h3>Mi horario</h3>
+                <p>Consulta la programación de tus clases.</p>
+                <span class="tarjeta-enlace">Ver horario →</span>
+              </button>
+            </div>
+          </section>
+        }
+      }
+
+      @if (pantalla() === 'salas' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Salas y espacios disponibles</h2>
+              <p>Información demostrativa de los espacios registrados.</p>
+            </div>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Sala</th>
+                  <th>Capacidad</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>A45</td>
+                  <td>45 equipos/personas</td>
+                  <td><span class="estado estado-verde">Disponible</span></td>
+                </tr>
+                <tr>
+                  <td>B30</td>
+                  <td>30 equipos/personas</td>
+                  <td><span class="estado estado-verde">Disponible</span></td>
+                </tr>
+                <tr>
+                  <td>C20</td>
+                  <td>20 equipos/personas</td>
+                  <td><span class="estado estado-verde">Disponible</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+
+      @if (pantalla() === 'revision' && esCoordinador()) {
+        <section class="panel-seccion">
+          <h2>Revisión del periodo académico</h2>
+          <p>
+            Verifica la información académica antes de realizar la asignación.
+          </p>
+
+          <div class="resumen-grid">
+            <article class="resumen-card">
+              <span>Programas</span>
+              <strong>2</strong>
+              <p>Sistemas e Industrial</p>
+            </article>
+
+            <article class="resumen-card">
+              <span>Salas registradas</span>
+              <strong>3</strong>
+              <p>A45, B30 y C20</p>
+            </article>
+
+            <article class="resumen-card">
+              <span>Estado de revisión</span>
+              <strong>Pendiente</strong>
+              <p>Datos demostrativos</p>
+            </article>
+          </div>
+        </section>
+      }
+
+      @if (pantalla() === 'asignacion' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Distribución de salas</h2>
+              <p>Vista demostrativa de la asignación académica.</p>
+            </div>
+
+            <button
+              type="button"
+              class="boton-secundario"
+              (click)="cambiarPantalla('explicacion')"
+            >
+              Ver explicación
+            </button>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Curso</th>
+                  <th>Programa</th>
+                  <th>Capacidad requerida</th>
+                  <th>Sala</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bases de Datos</td>
+                  <td>Sistemas</td>
+                  <td>40</td>
+                  <td><span class="estado estado-verde">A45</span></td>
+                </tr>
+                <tr>
+                  <td>Redes</td>
+                  <td>Sistemas</td>
+                  <td>30</td>
+                  <td><span class="estado estado-verde">B30</span></td>
+                </tr>
+                <tr>
+                  <td>Estadística</td>
+                  <td>Industrial</td>
+                  <td>20</td>
+                  <td><span class="estado estado-verde">C20</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="nota-demostracion">
+            Esta información es de demostración y todavía no está conectada
+            al servicio académico.
+          </p>
+        </section>
+      }
+
+      @if (pantalla() === 'mis-cursos' && esDocente()) {
+        <section class="panel-seccion">
+          <h2>Mis cursos</h2>
+          <p>Estos son ejemplos de cursos para la vista docente.</p>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Curso</th>
+                  <th>Programa</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bases de Datos</td>
+                  <td>Sistemas</td>
+                  <td><span class="estado estado-gris">Demostración</span></td>
+                </tr>
+                <tr>
+                  <td>Redes</td>
+                  <td>Sistemas</td>
+                  <td><span class="estado estado-gris">Demostración</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+
+      @if (pantalla() === 'mi-horario' && esDocente()) {
+        <section class="panel-seccion">
+          <h2>Mi horario</h2>
+          <p>Horario demostrativo. La programación real está pendiente de conexión.</p>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Curso</th>
+                  <th>Horario</th>
+                  <th>Sala</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Lunes</td>
+                  <td>Bases de Datos</td>
+                  <td>08:00 - 10:00</td>
+                  <td>A45</td>
+                </tr>
+                <tr>
+                  <td>Miércoles</td>
+                  <td>Redes</td>
+                  <td>10:00 - 12:00</td>
+                  <td>B30</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+
+      @if (pantalla() === 'explicacion' && esCoordinador()) {
+        <section class="panel-seccion">
+          <h2>Explicación de la asignación</h2>
+          <p>
+            La distribución debe respetar la capacidad de cada sala y evitar
+            conflictos entre cursos y horarios.
+          </p>
+
+          <div class="resumen-grid">
+            <article class="resumen-card">
+              <span>Capacidad</span>
+              <strong>Prioritaria</strong>
+              <p>La sala debe poder atender la cantidad de estudiantes.</p>
+            </article>
+
+            <article class="resumen-card">
+              <span>Disponibilidad</span>
+              <strong>Obligatoria</strong>
+              <p>El espacio debe estar libre en el horario asignado.</p>
+            </article>
+
+            <article class="resumen-card">
+              <span>Conflictos</span>
+              <strong>Evitar</strong>
+              <p>Un mismo espacio no puede asignarse simultáneamente a dos cursos.</p>
+            </article>
+          </div>
+
+          <button
+            type="button"
+            class="boton-secundario"
+            (click)="cambiarPantalla('asignacion')"
+          >
+            Volver a la asignación
+          </button>
+        </section>
+      }
+
+      @if (
+        pantalla() !== 'inicio' &&
+        (
+          (pantalla() === 'salas' && !esCoordinador()) ||
+          (pantalla() === 'revision' && !esCoordinador()) ||
+          (pantalla() === 'asignacion' && !esCoordinador()) ||
+          (pantalla() === 'explicacion' && !esCoordinador()) ||
+          (pantalla() === 'mis-cursos' && !esDocente()) ||
+          (pantalla() === 'mi-horario' && !esDocente())
+        )
+      ) {
+        <section class="panel-seccion">
+          <h2>Acceso no autorizado</h2>
+          <p>Tu cuenta no tiene permisos para consultar esta pantalla.</p>
+
+          <button
+            type="button"
+            class="boton-secundario"
+            (click)="cambiarPantalla('inicio')"
+          >
+            Volver al inicio
+          </button>
+        </section>
+      }
+
+      <footer class="pie-pagina">
+        Universidad Central del Valle — UCEVA
+      </footer>
+    </main>
+  </div>
+}
