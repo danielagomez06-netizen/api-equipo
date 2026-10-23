@@ -53,3 +53,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Maven / Java build output
+/target/
+**/target/
