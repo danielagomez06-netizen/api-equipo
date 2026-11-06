@@ -17,11 +17,11 @@ export const appConfig: ApplicationConfig = {
         realm: 'asignador_salas',
         clientId: 'asignador_frontend',
       },
-      initOptions: {
-        onLoad: 'check-sso',
-        pkceMethod: 'S256',
-        checkLoginIframe: false,
-      },
+initOptions: {
+  onLoad: 'login-required',
+  pkceMethod: 'S256',
+  checkLoginIframe: false,
+},
     }),
   ],
 };

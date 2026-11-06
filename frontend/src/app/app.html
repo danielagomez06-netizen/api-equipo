@@ -2,7 +2,7 @@
 @if (!autenticado()) {
   <main class="login">
     <section class="login-card">
-      <div class="login-logo">UCEVA</div>
+      <img class="login-logo" src="/app-mark.svg" alt="" aria-hidden="true">
       <p class="login-institucion">Universidad Central del Valle</p>
 
       <h1>Asignador de salas de cómputo</h1>
@@ -19,7 +19,7 @@
   <div class="app-layout">
     <aside class="sidebar">
       <div class="sidebar-encabezado">
-        <div class="sidebar-logo">UCEVA</div>
+        <img class="sidebar-logo" src="/app-mark.svg" alt="" aria-hidden="true">
         <div>
           <strong>Asignador</strong>
           <span>Salas de cómputo</span>
@@ -36,13 +36,34 @@
             [class.activo]="pantalla() === 'inicio'"
             (click)="cambiarPantalla('inicio')"
           >
-            <span>⌂</span>
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M3 11.5 12 4l9 7.5" />
+                <path d="M5 10.5V20h14v-9.5" />
+                <path d="M9 20v-6h6v6" />
+              </svg>
+            </span>
             Inicio
           </button>
         }
 
         @if (esCoordinador()) {
-          <p class="menu-titulo">COORDINACIÓN</p>
+          <p class="menu-titulo">CATÁLOGOS</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'programas'"
+            (click)="cambiarPantalla('programas')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3h9A2.5 2.5 0 0 1 19 5.5v12.2A2.5 2.5 0 0 1 16.5 20h-9A2.5 2.5 0 0 1 5 17.5V5.5Z" />
+                <path d="M8 7h8M8 10.5h8M8 14h5" />
+              </svg>
+            </span>
+            Programas académicos
+          </button>
 
           <button
             type="button"
@@ -50,29 +71,130 @@
             [class.activo]="pantalla() === 'salas'"
             (click)="cambiarPantalla('salas')"
           >
-            <span>▦</span>
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M4 20V8.5A1.5 1.5 0 0 1 5.5 7H18.5A1.5 1.5 0 0 1 20 8.5V20" />
+                <path d="M8 20v-5h8v5M8 7V4h8v3M10 11h4" />
+              </svg>
+            </span>
             Salas y espacios
           </button>
 
           <button
             type="button"
             class="menu-opcion"
-            [class.activo]="pantalla() === 'revision'"
-            (click)="cambiarPantalla('revision')"
+            [class.activo]="pantalla() === 'franjas'"
+            (click)="cambiarPantalla('franjas')"
           >
-            <span>✓</span>
-            Revisión del periodo
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2" />
+                <path d="M8 3v4M16 3v4M3 10h18" />
+                <path d="M12 14h.01M9 14h1.5M15.5 14h1.5M12 17h.01" />
+              </svg>
+            </span>
+            Franjas horarias
           </button>
 
           <button
             type="button"
             class="menu-opcion"
-            [class.activo]="pantalla() === 'asignacion'"
-            (click)="cambiarPantalla('asignacion')"
+            [class.activo]="pantalla() === 'docentes'"
+            (click)="cambiarPantalla('docentes')"
           >
-            <span>▤</span>
-            Asignación
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                <path d="M4.5 18.5a5.5 5.5 0 0 1 9 0" />
+                <path d="M17 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                <path d="M15.5 18.5a4.5 4.5 0 0 1 4 2" />
+              </svg>
+            </span>
+            Docentes
           </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'cursos'"
+            (click)="cambiarPantalla('cursos')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19a2 2 0 0 1 2 2v12.5A2.5 2.5 0 0 1 18.5 20H7.5A2.5 2.5 0 0 1 5 17.5V5.5Z" />
+                <path d="M8 7h7M8 10.5h7M8 14h5" />
+                <path d="M3 8.5A2 2 0 0 1 5 6.5v9A2.5 2.5 0 0 0 7.5 18H17" />
+              </svg>
+            </span>
+            Cursos
+          </button>
+
+          <p class="menu-titulo">PLANIFICACIÓN</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'preferencias'"
+            (click)="cambiarPantalla('preferencias')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M4 7h16M7 12h10M10 17h4" />
+                <circle cx="5" cy="7" r="1.5" />
+                <circle cx="18" cy="12" r="1.5" />
+                <circle cx="11" cy="17" r="1.5" />
+              </svg>
+            </span>
+            Preferencias
+          </button>
+
+          <p class="menu-titulo">ASIGNACIÓN</p>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'preparar'"
+            (click)="cambiarPantalla('preparar')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M8 4.5h8l3 3v11A2.5 2.5 0 0 1 16.5 21h-9A2.5 2.5 0 0 1 5 18.5v-11A2.5 2.5 0 0 1 7.5 5h.5Z" />
+                <path d="M8 4.5V8h8V4.5M9 13l2 2 4-5" />
+              </svg>
+            </span>
+            Preparar asignación
+          </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'resultados' || pantalla() === 'asignacion'"
+            (click)="cambiarPantalla('resultados')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M5 19V9M12 19V5M19 19v-8" />
+                <path d="M3 19h18" />
+              </svg>
+            </span>
+            Resultados
+          </button>
+
+          <button
+            type="button"
+            class="menu-opcion"
+            [class.activo]="pantalla() === 'conflictos'"
+            (click)="cambiarPantalla('conflictos')"
+          >
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M12 4.5 20 18a1.5 1.5 0 0 1-1.3 2.2H5.3A1.5 1.5 0 0 1 4 18l8-13.5Z" />
+                <path d="M12 9v4.5M12 17h.01" />
+              </svg>
+            </span>
+            Conflictos y pendientes
+          </button>
+
         }
 
         @if (esDocente()) {
@@ -84,7 +206,13 @@
             [class.activo]="pantalla() === 'mis-cursos'"
             (click)="cambiarPantalla('mis-cursos')"
           >
-            <span>▧</span>
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19a2 2 0 0 1 2 2v12.5A2.5 2.5 0 0 1 18.5 20H7.5A2.5 2.5 0 0 1 5 17.5V5.5Z" />
+                <path d="M8 7h7M8 10.5h7M8 14h5" />
+                <path d="M3 8.5A2 2 0 0 1 5 6.5v9A2.5 2.5 0 0 0 7.5 18H17" />
+              </svg>
+            </span>
             Mis cursos
           </button>
 
@@ -94,7 +222,13 @@
             [class.activo]="pantalla() === 'mi-horario'"
             (click)="cambiarPantalla('mi-horario')"
           >
-            <span>◷</span>
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2" />
+                <path d="M8 3v4M16 3v4M3 10h18" />
+                <path d="M9 14h1.5v2.5H9zM12.5 14h2v2.5h-2z" />
+              </svg>
+            </span>
             Mi horario
           </button>
         }
@@ -146,12 +280,33 @@
           } @else if (pantalla() === 'salas') {
             <h1>Salas y espacios</h1>
             <p>Consulta y administra los espacios disponibles.</p>
+          } @else if (pantalla() === 'programas') {
+            <h1>Programas académicos</h1>
+            <p>Consulta los programas vinculados a la planeación del periodo.</p>
+          } @else if (pantalla() === 'franjas') {
+            <h1>Franjas horarias</h1>
+            <p>Define la semana académica y las ventanas elegibles de cada sala.</p>
+          } @else if (pantalla() === 'docentes') {
+            <h1>Docentes</h1>
+            <p>Consulta los docentes incluidos en la programación académica.</p>
+          } @else if (pantalla() === 'cursos') {
+            <h1>Cursos</h1>
+            <p>Revisa los cursos y sus necesidades de espacio.</p>
+          } @else if (pantalla() === 'preferencias') {
+            <h1>Preferencias</h1>
+            <p>Consulta los criterios que orientan la asignación de salas.</p>
+          } @else if (pantalla() === 'preparar') {
+            <h1>Preparar asignación</h1>
+            <p>Verifica la información necesaria antes de generar resultados.</p>
+          } @else if (pantalla() === 'resultados' || pantalla() === 'asignacion') {
+            <h1>Resultados de asignación</h1>
+            <p>Consulta la distribución de cursos y salas del periodo.</p>
+          } @else if (pantalla() === 'conflictos') {
+            <h1>Conflictos y pendientes</h1>
+            <p>Identifica los aspectos que requieren revisión antes de asignar.</p>
           } @else if (pantalla() === 'revision') {
             <h1>Revisión del periodo</h1>
             <p>Revisa la información antes de generar la asignación.</p>
-          } @else if (pantalla() === 'asignacion') {
-            <h1>Asignación</h1>
-            <p>Consulta la distribución de cursos y salas.</p>
           } @else if (pantalla() === 'mis-cursos') {
             <h1>Mis cursos</h1>
             <p>Consulta los cursos asociados a tu cuenta.</p>
@@ -172,12 +327,14 @@
 
       @if (pantalla() === 'inicio' && (esCoordinador() || esDocente())) {
         <section class="bienvenida">
-          <h2>
-            Hola, {{ usuario() }}
-          </h2>
-          <p>
-            Selecciona una opción para comenzar a trabajar.
-          </p>
+          <div class="bienvenida-contenido">
+            <span class="bienvenida-etiqueta">ESPACIO DE TRABAJO</span>
+            <h2>Hola, {{ usuario() }}</h2>
+            <p>Selecciona una opción para continuar con tu gestión académica.</p>
+          </div>
+          <span class="rol-usuario">
+            @if (esCoordinador()) { Coordinación } @else { Docencia }
+          </span>
         </section>
 
         @if (esCoordinador()) {
@@ -187,10 +344,16 @@
             <div class="tarjetas-grid">
               <button
                 type="button"
-                class="tarjeta"
+                class="tarjeta tooltip-button"
+                data-tooltip="Administra las salas disponibles del período académico."
                 (click)="cambiarPantalla('salas')"
               >
-                <span class="tarjeta-icono">▦</span>
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <path d="M4 20V8.5A1.5 1.5 0 0 1 5.5 7H18.5A1.5 1.5 0 0 1 20 8.5V20" />
+                    <path d="M8 20v-5h8v5M8 7V4h8v3M10 11h4" />
+                  </svg>
+                </span>
                 <h3>Salas y espacios</h3>
                 <p>Consulta y administra los espacios de cómputo.</p>
                 <span class="tarjeta-enlace">Administrar →</span>
@@ -198,24 +361,56 @@
 
               <button
                 type="button"
-                class="tarjeta"
-                (click)="cambiarPantalla('revision')"
+                class="tarjeta tooltip-button"
+                data-tooltip="Configura los horarios y franjas disponibles por sala."
+                (click)="cambiarPantalla('franjas')"
               >
-                <span class="tarjeta-icono">✓</span>
-                <h3>Revisión del periodo</h3>
-                <p>Verifica los datos previos a la asignación.</p>
-                <span class="tarjeta-enlace">Revisar →</span>
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M8 3v4M16 3v4M3 10h18" />
+                    <path d="M12 14h.01M9 14h1.5M15.5 14h1.5M12 17h.01" />
+                  </svg>
+                </span>
+                <h3>Franjas horarias</h3>
+                <p>Configura los días y horarios disponibles por sala.</p>
+                <span class="tarjeta-enlace">Configurar →</span>
               </button>
 
               <button
                 type="button"
-                class="tarjeta"
-                (click)="cambiarPantalla('asignacion')"
+                class="tarjeta tooltip-button"
+                data-tooltip="Revisa los criterios y restricciones que influyen en la asignación."
+                (click)="cambiarPantalla('preferencias')"
               >
-                <span class="tarjeta-icono">▤</span>
-                <h3>Asignación</h3>
-                <p>Consulta la distribución de cursos y salas.</p>
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <path d="M4 7h16M7 12h10M10 17h4" />
+                    <circle cx="5" cy="7" r="1.5" />
+                    <circle cx="18" cy="12" r="1.5" />
+                    <circle cx="11" cy="17" r="1.5" />
+                  </svg>
+                </span>
+                <h3>Preferencias</h3>
+                <p>Revisa las condiciones y criterios de planeación.</p>
                 <span class="tarjeta-enlace">Consultar →</span>
+              </button>
+
+              <button
+                type="button"
+                class="tarjeta tooltip-button"
+                data-tooltip="Valida la información antes de ejecutar la asignación."
+                (click)="cambiarPantalla('preparar')"
+              >
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <path d="M8 4.5h8l3 3v11A2.5 2.5 0 0 1 16.5 21h-9A2.5 2.5 0 0 1 5 18.5v-11A2.5 2.5 0 0 1 7.5 5h.5Z" />
+                    <path d="M8 4.5V8h8V4.5M9 13l2 2 4-5" />
+                  </svg>
+                </span>
+                <h3>Preparar asignación</h3>
+                <p>Valida los datos antes de generar la distribución.</p>
+                <span class="tarjeta-enlace">Revisar datos →</span>
               </button>
             </div>
           </section>
@@ -223,15 +418,27 @@
 
         @if (esDocente()) {
           <section class="panel-seccion">
-            <h2>Herramientas de docencia</h2>
+            <div class="seccion-encabezado">
+              <div>
+                <h2>Tu espacio docente</h2>
+                <p>Accede rápidamente a tus cursos y a la programación semanal.</p>
+              </div>
+            </div>
 
             <div class="tarjetas-grid">
               <button
                 type="button"
-                class="tarjeta"
+                class="tarjeta tooltip-button"
+                data-tooltip="Consulta los cursos asociados a tu perfil de docente."
                 (click)="cambiarPantalla('mis-cursos')"
               >
-                <span class="tarjeta-icono">▧</span>
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19a2 2 0 0 1 2 2v12.5A2.5 2.5 0 0 1 18.5 20H7.5A2.5 2.5 0 0 1 5 17.5V5.5Z" />
+                    <path d="M8 7h7M8 10.5h7M8 14h5" />
+                    <path d="M3 8.5A2 2 0 0 1 5 6.5v9A2.5 2.5 0 0 0 7.5 18H17" />
+                  </svg>
+                </span>
                 <h3>Mis cursos</h3>
                 <p>Consulta tus cursos y sus datos principales.</p>
                 <span class="tarjeta-enlace">Ver cursos →</span>
@@ -239,10 +446,17 @@
 
               <button
                 type="button"
-                class="tarjeta"
+                class="tarjeta tooltip-button"
+                data-tooltip="Revisa tu horario de clases y disponibilidad semanal."
                 (click)="cambiarPantalla('mi-horario')"
               >
-                <span class="tarjeta-icono">◷</span>
+                <span class="tarjeta-icono menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M8 3v4M16 3v4M3 10h18" />
+                    <path d="M9 14h1.5v2.5H9zM12.5 14h2v2.5h-2z" />
+                  </svg>
+                </span>
                 <h3>Mi horario</h3>
                 <p>Consulta la programación de tus clases.</p>
                 <span class="tarjeta-enlace">Ver horario →</span>
@@ -250,6 +464,39 @@
             </div>
           </section>
         }
+      }
+
+      @if (pantalla() === 'inicio' && esCoordinador()) {
+        <section class="resumen-inicio" aria-label="Resumen del periodo">
+          <article><span class="resumen-inicio-icono">▦</span><div><strong>3</strong><span>Salas registradas</span></div></article>
+          <article><span class="resumen-inicio-icono">▤</span><div><strong>30</strong><span>Franjas semanales</span></div></article>
+          <article><span class="resumen-inicio-icono alerta">!</span><div><strong>{{ totalBloqueadas() }}</strong><span>Bloqueos por revisar</span></div></article>
+          <button type="button" class="resumen-inicio-enlace" (click)="cambiarPantalla('conflictos')">Revisar pendientes <span aria-hidden="true">→</span></button>
+        </section>
+      }
+
+      @if (pantalla() === 'programas' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Programas académicos</h2>
+              <p>Programas incluidos en la planeación del semestre {{ semestre() }}.</p>
+            </div>
+            <span class="periodo-activo">2 programas</span>
+          </div>
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr><th>Programa</th><th>Código</th><th>Cursos asociados</th><th>Estado</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ingeniería de Sistemas</td><td>IS</td><td>18</td><td><span class="estado estado-verde">Activo</span></td></tr>
+                <tr><td>Ingeniería Industrial</td><td>II</td><td>12</td><td><span class="estado estado-verde">Activo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="nota-demostracion">Datos de ejemplo para la vista de diseño; el catálogo real requiere conexión con el servicio académico.</p>
+        </section>
       }
 
       @if (pantalla() === 'salas' && esCoordinador()) {
@@ -292,12 +539,371 @@
         </section>
       }
 
+      @if (pantalla() === 'docentes' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Docentes del periodo</h2>
+              <p>Consulta la carga académica y el programa de cada docente.</p>
+            </div>
+            <span class="periodo-activo">Semestre {{ semestre() }}</span>
+          </div>
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr><th>Docente</th><th>Programa</th><th>Cursos</th><th>Estado</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ana Castro</td><td>Ingeniería de Sistemas</td><td>3</td><td><span class="estado estado-verde">Activo</span></td></tr>
+                <tr><td>Juan Pérez</td><td>Ingeniería Industrial</td><td>2</td><td><span class="estado estado-verde">Activo</span></td></tr>
+                <tr><td>María Rojas</td><td>Ingeniería de Sistemas</td><td>2</td><td><span class="estado estado-verde">Activo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="nota-demostracion">Información demostrativa. Los datos no están conectados al sistema académico.</p>
+        </section>
+      }
+
+      @if (pantalla() === 'cursos' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Cursos por programar</h2>
+              <p>Revisa el tamaño del grupo y los requerimientos de espacio.</p>
+            </div>
+            <span class="periodo-activo">5 cursos</span>
+          </div>
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr><th>Curso</th><th>Programa</th><th>Estudiantes</th><th>Recurso</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Bases de Datos</td><td>Sistemas</td><td>40</td><td>Computadores</td></tr>
+                <tr><td>Redes</td><td>Sistemas</td><td>30</td><td>Computadores</td></tr>
+                <tr><td>Estadística</td><td>Industrial</td><td>24</td><td>Proyector</td></tr>
+                <tr><td>Programación II</td><td>Sistemas</td><td>32</td><td>Computadores</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="nota-demostracion">Ejemplos visuales. La información real debe cargarse desde el servicio académico.</p>
+        </section>
+      }
+
+      @if (pantalla() === 'preferencias' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Criterios de asignación</h2>
+              <p>Parámetros de referencia para planificar la distribución.</p>
+            </div>
+            <span class="periodo-activo">Semestre {{ semestre() }}</span>
+          </div>
+          <div class="resumen-grid preferencias-grid">
+            <article class="resumen-card"><span>Capacidad</span><strong>Prioritaria</strong><p>El espacio debe recibir a todo el grupo.</p></article>
+            <article class="resumen-card"><span>Disponibilidad</span><strong>Obligatoria</strong><p>Solo se asignan franjas habilitadas.</p></article>
+            <article class="resumen-card"><span>Recursos</span><strong>Compatibles</strong><p>Se consideran los equipos requeridos.</p></article>
+          </div>
+          <button type="button" class="boton-secundario" (click)="cambiarPantalla('franjas')">Configurar franjas horarias</button>
+        </section>
+      }
+
+      @if (pantalla() === 'preparar' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Lista de verificación</h2>
+              <p>Confirma que la información esté lista antes de revisar la asignación.</p>
+            </div>
+            <span class="estado estado-gris">Revisión necesaria</span>
+          </div>
+          <div class="lista-verificacion">
+            <div><span class="verificacion-icono">✓</span><span><strong>Salas registradas</strong><small>Hay espacios disponibles para el periodo.</small></span><span class="estado estado-verde">Listo</span></div>
+            <div><span class="verificacion-icono">✓</span><span><strong>Franjas horarias</strong><small>Verifica la disponibilidad semanal por sala.</small></span><button type="button" class="enlace-accion" (click)="cambiarPantalla('franjas')">Revisar</button></div>
+            <div><span class="verificacion-icono pendiente">!</span><span><strong>Cursos y capacidades</strong><small>Confirma grupos y recursos requeridos.</small></span><button type="button" class="enlace-accion" (click)="cambiarPantalla('cursos')">Consultar</button></div>
+          </div>
+          <div class="acciones-preparacion">
+            <button type="button" class="boton-secundario" (click)="cambiarPantalla('revision')">Revisión detallada</button>
+            <button type="button" class="boton-primario" (click)="cambiarPantalla('resultados')">Ver resultados de ejemplo</button>
+          </div>
+          <p class="nota-demostracion">Los datos de revisión y asignación son demostrativos; no se ejecuta ningún proceso real.</p>
+        </section>
+      }
+
+      @if (pantalla() === 'conflictos' && esCoordinador()) {
+        <section class="panel-seccion">
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Revisión de pendientes</h2>
+              <p>Aspectos que conviene verificar antes de publicar la distribución.</p>
+            </div>
+            <span class="estado estado-ambar">2 pendientes</span>
+          </div>
+          <div class="pendiente-card">
+            <span class="pendiente-icono">!</span>
+            <div><strong>Franjas bloqueadas</strong><p>Hay {{ totalBloqueadas() }} franja(s) bloqueada(s) para {{ salaSeleccionada() }}.</p></div>
+            <button type="button" class="enlace-accion" (click)="cambiarPantalla('franjas')">Ver horarios</button>
+          </div>
+          <div class="pendiente-card">
+            <span class="pendiente-icono">!</span>
+            <div><strong>Validar capacidad de cursos</strong><p>Compara el número de estudiantes con los puestos disponibles en cada sala.</p></div>
+            <button type="button" class="enlace-accion" (click)="cambiarPantalla('cursos')">Ver cursos</button>
+          </div>
+          <p class="nota-demostracion">Panel de demostración: estos avisos no representan conflictos calculados por el sistema.</p>
+        </section>
+      }
+
+      @if (pantalla() === 'franjas' && esCoordinador()) {
+        <section class="franjas-pagina">
+          <div class="franjas-acciones">
+            <span class="periodo-activo">Semestre {{ semestre() }}</span>
+            <div class="botones-configuracion">
+              <button
+                type="button"
+                class="boton-secundario"
+                (click)="restablecerConfiguracion()"
+              >
+                Restablecer
+              </button>
+              <button
+                type="button"
+                class="boton-primario"
+                (click)="guardarConfiguracion()"
+              >
+                <span aria-hidden="true">✓</span>
+                Guardar configuración
+              </button>
+            </div>
+          </div>
+
+          <div class="aviso-semana" role="note">
+            <span class="aviso-icono" aria-hidden="true">i</span>
+            <div>
+              <strong>Semana tipo · semestre {{ semestre() }}</strong>
+              <p>
+                {{ diasConfigurados() === 'sabado' ? 'Lunes a sábado' : 'Lunes a viernes' }},
+                de {{ inicio() }} a {{ fin() }}. Las franjas bloqueadas se excluyen
+                de la asignación.
+              </p>
+            </div>
+          </div>
+
+          @if (guardado()) {
+            <p class="mensaje-guardado" role="status">
+              Configuración guardada en esta sesión de demostración.
+            </p>
+          }
+
+          <div class="franjas-layout">
+            <section class="disponibilidad-card" aria-labelledby="disponibilidad-titulo">
+              <div class="disponibilidad-encabezado">
+                <div>
+                  <h2 id="disponibilidad-titulo">Disponibilidad semanal</h2>
+                  <p>
+                    {{ totalFranjas() }} franjas ·
+                    {{ totalFranjas() - totalBloqueadas() }} disponibles ·
+                    {{ totalBloqueadas() }} bloqueadas
+                  </p>
+                </div>
+                <span class="etiqueta-sala">{{ salaSeleccionada() }}</span>
+              </div>
+
+              <div class="filtros-disponibilidad">
+                <label>
+                  <span>Sala</span>
+                  <select [value]="salaSeleccionada()" (change)="actualizarSala($event)">
+                    <option value="LAB-204">LAB-204 · 40 puestos</option>
+                    <option value="LAB-205">LAB-205 · 32 puestos</option>
+                    <option value="LAB-206">LAB-206 · 24 puestos</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Aplicación</span>
+                  <select [value]="aplicacion()" (change)="actualizarAplicacion($event)">
+                    <option>Todas las semanas de {{ semestre() }}</option>
+                    <option>Semanas pares de {{ semestre() }}</option>
+                    <option>Semanas impares de {{ semestre() }}</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="tabla-franjas-contenedor">
+                <table class="tabla-franjas">
+                  <thead>
+                    <tr>
+                      <th scope="col">Hora</th>
+                      @for (dia of diasVisibles(); track dia) {
+                        <th scope="col">{{ dia }}</th>
+                      }
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (franja of franjasHorario(); track $index; let indice = $index) {
+                      <tr>
+                        <th scope="row">{{ franja }}</th>
+                        @for (dia of diasVisibles(); track dia) {
+                          <td>
+                            <button
+                              type="button"
+                              class="celda-franja"
+                              [class.celda-bloqueada]="estadoFranja(dia, indice)"
+                              [attr.aria-label]="dia + ', ' + franja + ': ' + (estadoFranja(dia, indice) || 'disponible') + '. Activar para cambiar el estado.'"
+                              [attr.aria-pressed]="!!estadoFranja(dia, indice)"
+                              (click)="alternarFranja(dia, indice)"
+                            >
+                              @if (estadoFranja(dia, indice)) {
+                                <span>Bloqueada</span>
+                                @if (dia === 'Miércoles' && indice === 3) {
+                                  <small>Mantenimiento</small>
+                                }
+                              } @else {
+                                <span>Disponible</span>
+                              }
+                            </button>
+                          </td>
+                        }
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="leyenda-franjas">
+                <span class="leyenda-disponible">Disponible</span>
+                <span class="leyenda-bloqueada">Bloqueada</span>
+                <span class="leyenda-ayuda">Selecciona una celda para alternar su disponibilidad.</span>
+              </div>
+            </section>
+
+            <aside class="configuracion-columna">
+              <section class="configuracion-card" aria-labelledby="configuracion-titulo">
+                <h2 id="configuracion-titulo">Configuración</h2>
+                <p class="configuracion-descripcion">Parámetros de la semana académica</p>
+
+                <label class="campo-configuracion">
+                  <span>Periodo académico</span>
+                  <select [value]="semestre()" (change)="actualizarSemestre($event)">
+                    <option value="2026-2">Semestre 2026-2</option>
+                    <option value="2027-1">Semestre 2027-1</option>
+                    <option value="2027-2">Semestre 2027-2</option>
+                  </select>
+                </label>
+
+                <div class="campo-configuracion">
+                  <span>Días habilitados</span>
+                  <div class="selector-dias">
+                    <select [value]="diasConfigurados()" (change)="actualizarDias($event)">
+                      <option value="laborables">Lunes a viernes</option>
+                      <option value="sabado">Lunes a sábado</option>
+                      <option value="personalizado">Seleccionar días</option>
+                    </select>
+                    <button
+                      type="button"
+                      class="boton-calendario"
+                      (click)="abrirCalendarioDias()"
+                    >
+                      Ver calendario
+                    </button>
+                  </div>
+
+                  @if (vistaCalendarioDias()) {
+                    <div class="calendario-dias" role="dialog" aria-label="Calendario de días habilitados">
+                      <div class="calendario-header">
+                        <strong>Días de la semana</strong>
+                        <button type="button" class="cerrar-calendario" (click)="cerrarCalendarioDias()">Cerrar</button>
+                      </div>
+
+                      <div class="dias-semana-grid">
+                        @for (dia of ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; track dia) {
+                          <button
+                            type="button"
+                            class="dia-semana"
+                            [class.activo]="diasPersonalizados().includes(dia)"
+                            (click)="alternarDiaHabilitado(dia)"
+                          >
+                            {{ dia }}
+                          </button>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <div class="campos-hora">
+                  <label class="campo-configuracion">
+                    <span>Inicio</span>
+                    <select [value]="inicio()" (change)="actualizarInicio($event)">
+                      <option value="07:00">07:00</option>
+                      <option value="08:00">08:00</option>
+                      <option value="09:00">09:00</option>
+                    </select>
+                  </label>
+                  <label class="campo-configuracion">
+                    <span>Fin</span>
+                    <select [value]="fin()" (change)="actualizarFin($event)">
+                      <option value="17:00">17:00</option>
+                      <option value="18:00">18:00</option>
+                      <option value="19:00">19:00</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                  </label>
+                </div>
+
+                <label class="campo-configuracion">
+                  <span>Duración de bloque</span>
+                  <select [value]="duracion()" (change)="actualizarDuracion($event)">
+                    <option value="1">1 hora</option>
+                    <option value="2">2 horas</option>
+                    <option value="3">3 horas</option>
+                  </select>
+                  <small>No se permiten sesiones fraccionadas.</small>
+                </label>
+
+                <label class="campo-configuracion">
+                  <span>Aplicar a</span>
+                  <select [value]="salaSeleccionada()" (change)="actualizarSala($event)">
+                    <option value="LAB-204">LAB-204</option>
+                    <option value="LAB-205">LAB-205</option>
+                    <option value="LAB-206">LAB-206</option>
+                  </select>
+                  <small>Las demás salas conservan su configuración individual.</small>
+                </label>
+              </section>
+
+              <section class="bloque-seleccionado-card" aria-live="polite">
+                <h2>Franja seleccionada</h2>
+                <strong>{{ diaSeleccionado() }} · {{ horaSeleccionada() }}</strong>
+                <p>
+                  @if (estadoFranja(diaSeleccionado(), franjaSeleccionada())) {
+                    {{ estadoFranja(diaSeleccionado(), franjaSeleccionada()) }} · {{ salaSeleccionada() }}
+                  } @else {
+                    Disponible · {{ salaSeleccionada() }}
+                  }
+                </p>
+                @if (estadoFranja(diaSeleccionado(), franjaSeleccionada())) {
+                  <span class="etiqueta-bloqueo">No elegible para cursos</span>
+                } @else {
+                  <span class="etiqueta-disponibilidad">Elegible para cursos</span>
+                }
+              </section>
+            </aside>
+          </div>
+
+          <p class="nota-demostracion nota-franjas">
+            Las opciones y bloqueos son demostrativos; todavía no se guardan en el servicio académico.
+          </p>
+        </section>
+      }
+
       @if (pantalla() === 'revision' && esCoordinador()) {
         <section class="panel-seccion">
-          <h2>Revisión del periodo académico</h2>
-          <p>
-            Verifica la información académica antes de realizar la asignación.
-          </p>
+          <div class="seccion-encabezado">
+            <div>
+              <h2>Revisión del periodo académico</h2>
+              <p>Verifica la información antes de realizar la asignación.</p>
+            </div>
+            <span class="estado estado-ambar">Pendiente</span>
+          </div>
 
           <div class="resumen-grid">
             <article class="resumen-card">
@@ -318,10 +924,11 @@
               <p>Datos demostrativos</p>
             </article>
           </div>
+          <button type="button" class="boton-primario" (click)="cambiarPantalla('resultados')">Consultar resultados</button>
         </section>
       }
 
-      @if (pantalla() === 'asignacion' && esCoordinador()) {
+      @if ((pantalla() === 'resultados' || pantalla() === 'asignacion') && esCoordinador()) {
         <section class="panel-seccion">
           <div class="seccion-encabezado">
             <div>
@@ -484,7 +1091,15 @@
       @if (
         pantalla() !== 'inicio' &&
         (
-          (pantalla() === 'salas' && !esCoordinador()) ||
+        (pantalla() === 'programas' && !esCoordinador()) ||
+        (pantalla() === 'salas' && !esCoordinador()) ||
+        (pantalla() === 'franjas' && !esCoordinador()) ||
+        (pantalla() === 'docentes' && !esCoordinador()) ||
+        (pantalla() === 'cursos' && !esCoordinador()) ||
+        (pantalla() === 'preferencias' && !esCoordinador()) ||
+        (pantalla() === 'preparar' && !esCoordinador()) ||
+        (pantalla() === 'resultados' && !esCoordinador()) ||
+        (pantalla() === 'conflictos' && !esCoordinador()) ||
           (pantalla() === 'revision' && !esCoordinador()) ||
           (pantalla() === 'asignacion' && !esCoordinador()) ||
           (pantalla() === 'explicacion' && !esCoordinador()) ||
